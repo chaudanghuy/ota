@@ -87,6 +87,9 @@ const Posts = (props) => {
                                         >
                                             Delete
                                         </Button>
+                                        <Button variant="primary" as={Link} to={`/admin/posts/images/${post.id}`}>
+                                            View Images
+                                        </Button>
                                     </td>
                                 </tr>
                             ))}

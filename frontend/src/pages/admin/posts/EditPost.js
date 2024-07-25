@@ -246,33 +246,7 @@ const EditPost = () => {
                                     </div>
                                 )}
                             </Dropzone>
-                        </Form.Group>
-
-                        <Form.Group controlId="formImages">
-                            <Form.Label>Images</Form.Label>
-                            <Dropzone onDrop={handleImagesChange} multiple>
-                                {({ getRootProps, getInputProps }) => (
-                                    <div {...getRootProps()} className="dropzone">
-                                        <input {...getInputProps()} />
-                                        {imagesPreview.length > 0 ? (
-                                            <div>
-                                                <p>{imagesPreview.length} files selected</p>
-                                                {imagesPreview.map((src, index) => (
-                                                    <img
-                                                        key={index}
-                                                        src={src}
-                                                        alt={`Preview ${index}`}
-                                                        style={{ maxWidth: '200px', marginTop: '10px', marginRight: '10px' }}
-                                                    />
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            <p>Drag 'n' drop multiple images here, or click to select files</p>
-                                        )}
-                                    </div>
-                                )}
-                            </Dropzone>
-                        </Form.Group>
+                        </Form.Group>                        
 
                         <Form.Group controlId="formSEOMetaTitle">
                             <Form.Label>SEO Meta Title</Form.Label>

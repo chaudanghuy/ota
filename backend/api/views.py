@@ -198,6 +198,33 @@ def article_detail(request, pk):
     elif request.method == 'DELETE':
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET', 'POST'])    
+def article_detail_image(request, pk):
+    try:
+        article = Article.objects.get(pk=pk)
+    except Article.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)            
+
+    if request.method == 'GET':
+        images = article.images.all()
+        serializer = ImageSerializer(images, many=True)        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        files = request.FILES.getlist('images')
+        for file in files:
+            article.images.add(file)
+        return Response({'message': 'Images uploaded successfully'}, status=status.HTTP_201_CREATED) 
+
+@api_view(['DELETE'])
+def article_detail_image_delete(request, pk):
+    try:
+        image = Image.objects.get(pk=pk)
+    except Image.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    image.delete()
+    return Response({'message': 'Image deleted successfully'}, status=status.HTTP_204_NO_CONTENT)     
 
 #   
 # Projects    

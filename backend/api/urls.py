@@ -12,6 +12,8 @@ urlpatterns = [
     # Article
     path("articles", views.article_list),
     path("articles/<int:pk>", views.article_detail),
+    path("article/images/<int:pk>", views.article_detail_image),
+    path("article/images/delete/<int:pk>", views.article_detail_image_delete),
 
     # Projects
     path("projects/<str:status>", views.project_list),

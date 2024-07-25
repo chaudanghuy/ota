@@ -20,6 +20,7 @@ import axios from "axios";
 import Posts from "./pages/admin/posts/Posts";
 import AddPost from "./pages/admin/posts/AddPost";
 import EditPost from "./pages/admin/posts/EditPost";
+import PostImages from "./pages/admin/posts/PostImages";
 
 // Categories
 import Categories from "./pages/admin/categories/Categories";
@@ -120,6 +121,7 @@ const App = () => {
                     <Route path="/admin/posts" exact element={<Posts isLoggedIn={isLoggedIn}/>} />
                     <Route path="/admin/posts/add" exact element={<AddPost isLoggedIn={isLoggedIn}/>} />
                     <Route path="/admin/posts/edit/:id" exact element={<EditPost isLoggedIn={isLoggedIn}/>} />
+                    <Route path="/admin/posts/images/:id" exact element={<PostImages isLoggedIn={isLoggedIn}/>} />
                     <Route path="/admin/pages" exact element={<Pages isLoggedIn={isLoggedIn}/>} />
                     <Route path="/admin/pages/add" exact element={<AddPage isLoggedIn={isLoggedIn}/>} />
                     <Route path="/admin/pages/edit/:id" exact element={<EditPage isLoggedIn={isLoggedIn}/>} />

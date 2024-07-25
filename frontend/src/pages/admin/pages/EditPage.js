@@ -7,6 +7,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 // Function to convert title to a slug
 const generateSlug = (title) => {
     return title
@@ -38,9 +40,9 @@ const EditPage = () => {
         // Fetch page data and set initial state
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/pages/${id}`);
+                const response = await axios.get(`${BACKEND_URL}/api/pages/${id}`);
                 setFormData(response.data);
-                setImagePreview(response.data.image ? `http://localhost:8000${response.data.image}` : null);
+                setImagePreview(response.data.image ? `${BACKEND_URL}${response.data.image}` : null);
             } catch (error) {
                 console.error('Error fetching page data:', error);
             }
@@ -87,7 +89,7 @@ const EditPage = () => {
         }
 
         try {
-            await axios.put(`http://localhost:8000/api/pages/${id}`, updatedFormData, {
+            await axios.put(`${BACKEND_URL}/api/pages/${id}`, updatedFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

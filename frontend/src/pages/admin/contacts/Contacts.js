@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import { FaCheckCircle, FaTimesCircle, FaReply, FaEnvelopeOpen } from 'react-icons/fa';
 
-const URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Contacts = (props) => {
     const { isLoggedIn, name, email } = props;
@@ -21,7 +21,7 @@ const Contacts = (props) => {
     useEffect(() => {
         if (isLoggedIn === false) redirect("/");
 
-        fetch(URL + "/api/contacts")
+        fetch(BACKEND_URL + "/api/contacts")
             .then(response => response.json())
             .then(data => setContacts(data))
             .catch(error => console.error(error));
@@ -29,7 +29,7 @@ const Contacts = (props) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8000/api/contacts/${contactToDelete.id}`);
+            await axios.delete(`${BACKEND_URL}/api/contacts/${contactToDelete.id}`);
             setContacts(contacts.filter(contact => contact.id !== contactToDelete.id));
             setShowDeleteModal(false);
         } catch (error) {

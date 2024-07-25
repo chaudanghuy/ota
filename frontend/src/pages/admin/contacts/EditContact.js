@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const EditContact = () => {
   const { id } = useParams();
   let navigate = useNavigate();
@@ -26,7 +28,7 @@ const EditContact = () => {
 
   const fetchContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/contacts/${id}/`);
+      const response = await axios.get(`${BACKEND_URL}/api/contacts/${id}/`);
       const data = response.data;
       setFormData({
         title: data.title,
@@ -54,7 +56,7 @@ const EditContact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/contacts/${id}/`, formData);      
+      await axios.put(`${BACKEND_URL}/api/contacts/${id}/`, formData);      
       navigate('/admin/contacts');
     } catch (error) {
       console.error('Error updating contact:', error);

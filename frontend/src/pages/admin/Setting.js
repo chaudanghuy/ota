@@ -7,6 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Settings = () => {
     const navigate = useNavigate();
     const [siteLogo, setSiteLogo] = useState(null);
@@ -67,7 +69,7 @@ const Settings = () => {
 
     const fetchSettings = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/setting');
+            const response = await axios.get(BACKEND_URL + '/api/setting');
             const data = response.data;
             setFormData({
                 ...formData,
@@ -75,10 +77,10 @@ const Settings = () => {
                 created_at: new Date(data.created_at),
                 updated_at: new Date(data.updated_at),
             });
-            setSiteLogo(data.site_logo ? `http://localhost:8000${data.site_logo}` : null);
-            setSiteFavicon(data.site_favicon ? `http://localhost:8000${data.site_favicon}` : null);
-            setCompanyLogo(data.company_logo ? `http://localhost:8000${data.company_logo}` : null);
-            setSeoSettingImage(data.seo_setting_image ? `http://localhost:8000${data.seo_setting_image}` : null);
+            setSiteLogo(data.site_logo ? `${BACKEND_URL}${data.site_logo}` : null);
+            setSiteFavicon(data.site_favicon ? `${BACKEND_URL}${data.site_favicon}` : null);
+            setCompanyLogo(data.company_logo ? `${BACKEND_URL}${data.company_logo}` : null);
+            setSeoSettingImage(data.seo_setting_image ? `${BACKEND_URL}${data.seo_setting_image}` : null);
         } catch (error) {
             console.error('Error fetching settings:', error);
         }
@@ -148,7 +150,7 @@ const Settings = () => {
             }
         }
         try {
-            await axios.post('http://localhost:8000/api/setting', formDataToSend, {
+            await axios.post(BACKEND_URL + '/api/setting', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

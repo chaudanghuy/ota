@@ -4,7 +4,7 @@ import axios from "axios";
 import { Container, Row, Col, Table, Button, Pagination, Modal } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
-const URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Pages = (props) => {
     const { isLoggedIn, name, email } = props;
@@ -21,7 +21,7 @@ const Pages = (props) => {
             redirect("/login");
         }
 
-        fetch(URL + "/api/pages")
+        fetch(BACKEND_URL + "/api/pages")
             .then(response => response.json())
             .then(data => setPages(data))
             .catch(error => console.error(error));
@@ -29,7 +29,7 @@ const Pages = (props) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8000/api/articles/${pageToDelete.id}`);
+            await axios.delete(`${BACKEND_URL}/api/articles/${pageToDelete.id}`);
             setPages(pages.filter(page => page.id !== pageToDelete.id));
             setShowDeleteModal(false);
         } catch (error) {

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Table, Button, Pagination, Modal } from 'react-bootstrap';
 
-const URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Posts = (props) => {
     let navigate = useNavigate();
@@ -22,7 +22,7 @@ const Posts = (props) => {
             navigate("/login");
         }
 
-        fetch(URL + "/api/articles")
+        fetch(BACKEND_URL + "/api/articles")
             .then(response => response.json())
             .then(data => setPosts(data))
             .catch(error => console.error(error));
@@ -30,7 +30,7 @@ const Posts = (props) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8000/api/articles/${postToDelete.id}`);
+            await axios.delete(`${BACKEND_URL}/api/articles/${postToDelete.id}`);
             setPosts(posts.filter(post => post.id !== postToDelete.id));
             setShowDeleteModal(false);
         } catch (error) {
@@ -77,7 +77,7 @@ const Posts = (props) => {
                                 <tr key={post.id}>
                                     <td>{post.id}</td>
                                     <td>{post.title}</td>
-                                    <td><img className="img-fluid w-20 rounded-circld" src={URL + post.image} alt={post.title} /></td>
+                                    <td><img className="img-fluid w-20 rounded-circld" src={BACKEND_URL + post.image} alt={post.title} /></td>
                                     <td>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(post.created_at))}</td>
                                     <td>
                                         <Button variant="warning" as={Link} to={`/admin/posts/edit/${post.id}`}>Edit</Button>{' '}

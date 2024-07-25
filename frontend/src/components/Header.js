@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Logo from '../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faTwitter, faLinkedinIn, faYoutube, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons'
@@ -9,19 +9,18 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const FRONTEND_URL = process.env.REACT_APP_FRONT;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Header = (props) => {
 
     let navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail } = props;
+    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, setting } = props;        
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        setName(null);
-        setEmail(null);
-        navigate('/');
-        toast.success('You have successfully logged out.');
+        toast.success('You have successfully logged out.');        
+        localStorage.clear();
+        navigate('/login');        
     }
 
     return (
@@ -31,7 +30,7 @@ const Header = (props) => {
                     <input type="checkbox" id="navTrigger" />
                     <div id="logo">
                         <a href={FRONTEND_URL}>
-                            <img className="logo-1" src={Logo} alt="Logo" />
+                            <img className="logo-1" src={BACKEND_URL + setting.site_logo} alt="Logo" />
                         </a>
                     </div>
                     <div id="menu">
@@ -47,10 +46,10 @@ const Header = (props) => {
                                     <span data-hover="dự án">project</span>
                                 </CDropdownToggle>
                                 <CDropdownMenu className="clearfix">
-                                    <CDropdownItem href="/project/completed">
+                                    <CDropdownItem href="/projects/completed">
                                         <span data-hover="đã hoàn thành">completed</span>
                                     </CDropdownItem>
-                                    <CDropdownItem href="/project/coming-soon">
+                                    <CDropdownItem href="/projects/coming-soon">
                                         <span data-hover="đang triển khai">coming soon</span>
                                     </CDropdownItem>
                                 </CDropdownMenu>
@@ -72,7 +71,7 @@ const Header = (props) => {
                                     </CDropdownToggle>
                                     <CDropdownMenu className="clearfix">
                                         <CDropdownItem href="/admin/posts">
-                                            <span data-hover="bài viết">Article</span>
+                                            <span data-hover="Dự án">Projects</span>
                                         </CDropdownItem>
                                         <CDropdownItem href="/admin/pages">
                                             <span data-hover="trang">Pages</span>
@@ -80,11 +79,11 @@ const Header = (props) => {
                                         <CDropdownItem href="/admin/contacts">
                                             <span data-hover="Tin nhắn">Contacts</span>
                                         </CDropdownItem>
-                                        <CDropdownItem href="/admin/settings">
-                                            <span data-hover="Cài đặt">Settings</span>
+                                        <CDropdownItem href="/admin/slider">
+                                            <span data-hover="Hình ảnh">Slider</span>
                                         </CDropdownItem>
-                                        <CDropdownItem href="/admin/seo">
-                                            <span data-hover="SEO">SEO</span>
+                                        <CDropdownItem href="/admin/setting">
+                                            <span data-hover="Cài đặt">Settings</span>
                                         </CDropdownItem>
                                         <CDropdownItem onClick={handleLogout}>
                                             <span data-hover="Thoát">Logout</span>
@@ -96,7 +95,7 @@ const Header = (props) => {
                         <ul className="socials">
                             <li>
                                 <a
-                                    href="https://www.facebook.com/w2dstudio/"
+                                    href={setting.social_facebook}
                                     target="_blank"
                                     rel="nofollow noopenner"
                                 >
@@ -105,7 +104,7 @@ const Header = (props) => {
                             </li>
                             <li>
                                 <a
-                                    href="https://www.instagram.com/w2dstudio/"
+                                    href={setting.social_twitter}
                                     target="_blank"
                                     rel="nofollow noopenner"
                                 >

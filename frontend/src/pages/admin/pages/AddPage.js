@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
-const URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AddPage = () => {
+    let navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
+        content: '',
         seo_meta_title: '',
         seo_meta_description: '',
         seo_meta_keywords: '',
@@ -25,6 +31,10 @@ const AddPage = () => {
     };
 
     useEffect(() => {
+        if (localStorage.getItem('user_id') == null) {
+            navigate("/login");
+        }
+
         if (formData.title) {
             setFormData((prevData) => ({
                 ...prevData,
@@ -40,7 +50,7 @@ const AddPage = () => {
 
     const handleImageChange = (acceptedFiles) => {
         setFormData({ ...formData, image: acceptedFiles[0] });
-    };
+    };    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,12 +67,13 @@ const AddPage = () => {
         }
 
         try {
-            await axios.post(URL + '/api/pages', updatedFormData, {
+            const response = await axios.post(BACKEND_URL + '/api/pages', updatedFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            // Handle successful submission (e.g., redirect or show a success message)
+            // Handle successful submission (e.g., redirect or show a success message)            
+            navigate('/admin/pages');
         } catch (error) {
             console.error('Error adding page:', error);
         }
@@ -97,7 +108,7 @@ const AddPage = () => {
                                 onChange={handleChange}
                                 required
                             />
-                        </Form.Group>
+                        </Form.Group>                        
 
                         <Form.Group controlId="formSEOSeoMetaTitle">
                             <Form.Label>SEO Meta Title</Form.Label>
@@ -159,9 +170,11 @@ const AddPage = () => {
                             </Dropzone>
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
-                            Add Page
-                        </Button>
+                        <div className='flex justify-center'>
+                            <Button variant="primary" type="submit" className='mb-10'>
+                                Add Page
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             </div>

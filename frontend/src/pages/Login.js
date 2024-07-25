@@ -26,11 +26,10 @@ const Login = (props) => {
 
         if (data.success == true) {
             localStorage.setItem("user_id", data.user);
-            localStorage.setItem("access_token", data.access);
-            toast.success(data.message);            
+            localStorage.setItem("access_token", data.token);              
             setIsLoggedIn(true);
             setEmail(email);
-            navigate("/admin/posts");
+            navigate("/admin/posts");            
         } else {
             toast.error(data.message);
         }

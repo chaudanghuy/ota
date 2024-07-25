@@ -2,32 +2,37 @@ import React, { Component } from "react";
 
 const FRONTEND_URL = process.env.REACT_APP_FRONT;
 
-class Footer extends Component {
-    render() {
-        return (
-            <div id="footer">
-                <div className="main clearfix">
-                    <div className="footer_wrap">
-                        <div className="footer-item first">
-                            <div className="footer-icon icon-location">
-                                Le Capitole - 27 Thái Thịnh - Đống Đa - Hà Nội
-                            </div>
+const Footer = (props) => {
+
+    const {setting} = props;    
+
+    return (
+        <div id="footer">
+            <div className="main clearfix">
+                <div className="footer_wrap">
+                    <div className="footer-item first">
+                        <div className="footer-icon icon-location">
+                            {setting.company_address}
                         </div>
-                        <div className="footer-item">
-                            <div className="footer-icon icon-phone">
-                                <a href="tel:0986.208.387">0986.208.387</a>
-                            </div>
+                    </div>
+                    <div className="footer-item">
+                        <div className="footer-icon icon-phone">
+                            <a href={`tel:${setting.company_phone}`}>
+                                {setting.company_phone}                            
+                            </a>
                         </div>
-                        <div className="footer-item last">
-                            <div className="footer-icon icon-mail">
-                                <a href="mailto:info@{FRONTEND_URL}">info@{FRONTEND_URL}</a>
-                            </div>
+                    </div>
+                    <div className="footer-item last">
+                        <div className="footer-icon icon-mail">
+                            <a href={`mailto:${setting.company_email}`}>
+                                {setting.company_email}
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 
 }
 

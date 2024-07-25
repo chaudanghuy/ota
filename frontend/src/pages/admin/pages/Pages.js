@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, redirect } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Table, Button, Pagination, Modal } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -16,7 +17,9 @@ const Pages = (props) => {
     const [pageToDelete, setPageToDelete] = useState(null);
 
     useEffect(() => {
-        if (isLoggedIn === false) redirect("/");
+        if (localStorage.getItem('user_id') == null) {
+            redirect("/login");
+        }
 
         fetch(URL + "/api/pages")
             .then(response => response.json())
@@ -55,7 +58,7 @@ const Pages = (props) => {
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <Button variant="primary" onClick={() => { window.location.href = '/admin/pages/add' }} className="ms-auto float-end">Add page</Button>
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-dark">
-                        pages
+                        Pages
                     </h1>
                     <div className="clearfix" />
                     <Table striped bordered hover>

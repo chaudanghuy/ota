@@ -5,16 +5,21 @@ import axios from 'axios';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Dropzone from 'react-dropzone';
+import { toast } from 'react-toastify';
 
-const URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const EditPost = () => {
+    let navigate = useNavigate();
     const { id } = useParams();
     const [categories, setCategories] = useState([]);
     const [statuses, setStatuses] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
+        address: '',
+        area: '',
+        completed_year: '',
         content: '',
         category: '',
         status: '',
@@ -24,17 +29,36 @@ const EditPost = () => {
         image: null,
         images: []
     });
-    const navigate = useNavigate();
+    const [imagePreview, setImagePreview] = useState(null);
+    const [imagesPreview, setImagesPreview] = useState([]);
+
+    // Function to convert title to a slug
+    const generateSlug = (title) => {
+        return title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')    // Replace non-alphanumeric characters with hyphens
+            .replace(/(^-+|-+$)/g, '');     // Remove leading and trailing hyphens
+    };
 
     useEffect(() => {
+        if (localStorage.getItem('user_id') == null) {
+            navigate("/login");
+        }
         fetchPost();
         fetchCategories();
         fetchStatuses();
-    }, []);
+
+        if (formData.title) {
+            setFormData((prevData) => ({
+                ...prevData,
+                slug: generateSlug(prevData.title),
+            }));
+        }
+    }, [formData.title]);
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${URL}/api/categories`);
+            const response = await axios.get(`${BACKEND_URL}/api/categories`);
             setCategories(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -43,7 +67,7 @@ const EditPost = () => {
 
     const fetchStatuses = async () => {
         try {
-            const response = await axios.get(`${URL}/api/status`);
+            const response = await axios.get(`${BACKEND_URL}/api/status`);
             setStatuses(response.data);
         } catch (error) {
             console.error('Error fetching statuses:', error);
@@ -52,12 +76,10 @@ const EditPost = () => {
 
     const fetchPost = async () => {
         try {
-            const response = await axios.get(`${URL}/api/articles/${id}`);
-            setFormData({
-                ...response.data,
-                image: null,  // Reset image to null to handle new file uploads
-                images: []    // Reset images to an empty array to handle new file uploads
-              });
+            const response = await axios.get(`${BACKEND_URL}/api/articles/${id}`);
+            setFormData(response.data);
+            setImagePreview(response.data.image ? `http://localhost:8000${response.data.image}` : null);
+            setImagesPreview(response.data.images ? response.data.images.map(image => `http://localhost:8000${image.image}`) : null);
         } catch (error) {
             console.error('Error fetching post:', error);
         }
@@ -73,11 +95,14 @@ const EditPost = () => {
     };
 
     const handleImageChange = (acceptedFiles) => {
-        setFormData({ ...formData, image: acceptedFiles[0] });
+        const file = acceptedFiles[0];
+        setFormData({ ...formData, image: file });
+        setImagePreview(URL.createObjectURL(file));
     };
 
     const handleImagesChange = (acceptedFiles) => {
         setFormData({ ...formData, images: acceptedFiles });
+        setImagesPreview(acceptedFiles.map(file => URL.createObjectURL(file)));
     };
 
     const handleSubmit = async (e) => {
@@ -95,12 +120,12 @@ const EditPost = () => {
             }
         }
         try {
-            await axios.put(`${URL}/api/articles/${id}`, formData, {
+            await axios.put(`${BACKEND_URL}/api/articles/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            });
-            navigate('/posts');
+            });            
+            navigate('/admin/posts');
         } catch (error) {
             console.error('Error updating post:', error);
         }
@@ -131,6 +156,36 @@ const EditPost = () => {
                                 type="text"
                                 name="slug"
                                 value={formData.slug}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formAddress">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formArea">
+                            <Form.Label>Area</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="area"
+                                value={formData.area}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formCompletedYear">
+                            <Form.Label>Completed Year</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="completed_year"
+                                value={formData.completed_year}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -175,13 +230,13 @@ const EditPost = () => {
 
                         <Form.Group controlId="formImage">
                             <Form.Label>Image</Form.Label>
-                            <Dropzone onDrop={handleImageChange}>
+                            <Dropzone onDrop={handleImageChange} multiple={false}>
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {formData.image ? (
+                                        {imagePreview ? (
                                             <img
-                                                src={URL.createObjectURL(formData.image)}
+                                                src={imagePreview}
                                                 alt="Preview"
                                                 style={{ maxWidth: '200px', marginTop: '10px' }}
                                             />
@@ -199,13 +254,13 @@ const EditPost = () => {
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {formData.images.length > 0 ? (
+                                        {imagesPreview.length > 0 ? (
                                             <div>
-                                                <p>{formData.images.length} files selected</p>
-                                                {formData.images.map((file, index) => (
+                                                <p>{imagesPreview.length} files selected</p>
+                                                {imagesPreview.map((src, index) => (
                                                     <img
                                                         key={index}
-                                                        src={URL.createObjectURL(file)}
+                                                        src={src}
                                                         alt={`Preview ${index}`}
                                                         style={{ maxWidth: '200px', marginTop: '10px', marginRight: '10px' }}
                                                     />
@@ -249,9 +304,11 @@ const EditPost = () => {
                             />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
-                            Update Post
-                        </Button>
+                        <div className='flex justify-center mt-3 mb-10'>
+                            <Button variant="primary" type="submit" className='mb-10 justify-center'>
+                                Update Post
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             </div>

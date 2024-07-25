@@ -1,45 +1,44 @@
 import { useEffect, useState } from "react";
 import { Link, redirect } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Table, Button, Pagination, Modal } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import moment from 'moment';
+import { FaCheckCircle, FaTimesCircle, FaReply, FaEnvelopeOpen } from 'react-icons/fa';
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 
-const Posts = (props) => {
-    let navigate = useNavigate();
+const Contacts = (props) => {
     const { isLoggedIn, name, email } = props;
 
-    const [posts, setPosts] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 10;
+    const contactsPerPage = 10;
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [postToDelete, setPostToDelete] = useState(null);
+    const [contactToDelete, setContactToDelete] = useState(null);
 
-    useEffect(() => {                
-        if (localStorage.getItem('user_id') == null) {            
-            navigate("/login");
-        }
+    useEffect(() => {
+        if (isLoggedIn === false) redirect("/");
 
-        fetch(URL + "/api/articles")
+        fetch(URL + "/api/contacts")
             .then(response => response.json())
-            .then(data => setPosts(data))
+            .then(data => setContacts(data))
             .catch(error => console.error(error));
     }, []);
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8000/api/articles/${postToDelete.id}`);
-            setPosts(posts.filter(post => post.id !== postToDelete.id));
+            await axios.delete(`http://localhost:8000/api/contacts/${contactToDelete.id}`);
+            setContacts(contacts.filter(contact => contact.id !== contactToDelete.id));
             setShowDeleteModal(false);
         } catch (error) {
-            console.error('Error deleting post:', error);
+            console.error('Error deleting contact:', error);
         }
     };
 
-    const handleShowDeleteModal = (post) => {
-        setPostToDelete(post);
+    const handleShowDeleteModal = (contact) => {
+        setContactToDelete(contact);
         setShowDeleteModal(true);
     };
 
@@ -47,9 +46,10 @@ const Posts = (props) => {
         setShowDeleteModal(false);
     };
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const indexOfLastPage = currentPage * contactsPerPage;
+    const indexOfFistPage = indexOfLastPage - contactsPerPage;
+    const currentContacts = contacts.slice(indexOfFistPage, indexOfLastPage);
+    console.log(currentContacts);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -57,43 +57,45 @@ const Posts = (props) => {
         <div className="w-full flex flex-col items-center justify-center px-6 py-8 mx-auto my-5 lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xxl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <Button variant="primary" onClick={() => { window.location.href = '/admin/posts/add' }} className="ms-auto float-end">Add Project</Button>
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-dark">
-                        Projects
+                        Contacts
                     </h1>
                     <div className="clearfix" />
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Title</th>
-                                <th>Image</th>
-                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Content</th>
+                                <th>Send Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentPosts.map(post => (
-                                <tr key={post.id}>
-                                    <td>{post.id}</td>
-                                    <td>{post.title}</td>
-                                    <td><img className="img-fluid w-20 rounded-circld" src={URL + post.image} alt={post.title} /></td>
-                                    <td>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(post.created_at))}</td>
+                            {currentContacts.map(contact => (
+                                <tr key={contact.id}>
+                                    <td>{contact.title}</td>
+                                    <td>{contact.name}</td>
+                                    <td>{contact.phone}</td>
+                                    <td>{contact.email}</td>
+                                    <td>{contact.content}</td>
+                                    <td>{moment(contact.send_date).format('YYYY-MM-DD HH:mm')}</td>
                                     <td>
-                                        <Button variant="warning" as={Link} to={`/admin/posts/edit/${post.id}`}>Edit</Button>{' '}
                                         <Button
                                             variant="danger"
-                                            onClick={() => handleShowDeleteModal(post)}
-                                        >
-                                            Delete
-                                        </Button>
+                                            as={Link}
+                                            to={`mailto:${contact.email}`}>
+                                            Mail To <FaEnvelopeOpen />
+                                        </Button>{' '}                                        
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
                     <Pagination>
-                        {Array.from({ length: Math.ceil(posts.length / postsPerPage) }, (_, index) => (
+                        {Array.from({ length: Math.ceil(contacts.length / contactsPerPage) }, (_, index) => (
                             <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
                                 {index + 1}
                             </Pagination.Item>
@@ -107,7 +109,7 @@ const Posts = (props) => {
                     <Modal.Title>Confirm Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Are you sure you want to delete the post "{postToDelete?.title}"?
+                    Are you sure you want to delete the page "{contactToDelete?.title}"?
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDeleteModal}>
@@ -122,4 +124,4 @@ const Posts = (props) => {
     );
 };
 
-export default Posts;
+export default Contacts;

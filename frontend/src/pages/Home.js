@@ -6,43 +6,44 @@ import BackgroundSlider from 'react-background-slider'
 
 import axios from "axios";
 
-import { API_URL } from "../constants";
-
 import Slide1 from "../images/slide/slide_s35.jpg";
 import Slide2 from "../images/slide/slide_s38.jpg";
 import Slide3 from "../images/slide/slide_s37.jpg";
 import Slide4 from "../images/slide/slide_s34.jpg";
 import Slide5 from "../images/slide/slide_s39.jpg";
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 class Home extends Component {
     state = {
-        statuses: [],
+        statuses: [],        
+        sliders: [],        
         loading: true
-    };
+    };    
 
-    componentDidMount() {
-        this.resetState();
+    componentDidMount() {        
         this.setState({ loading: true });
+        this.getSliderImages();        
         setTimeout(() => {
             this.setState({ loading: false });
         }, 5000);
     }
 
-    getStatuses = () => {
-        axios.get(API_URL).then(
-            res => this.setState({ statuses: res.data })
-        );
-    };
+    getSliderImages = () => {
+        axios.get(API_URL + "/api/slider").then(
+            res => {
+                this.setState({ 
+                    sliders: res.data.map((slider) => API_URL + slider.image)
+                });
+            }
+        )
+    }        
 
-    resetState = () => {
-        this.getStatuses();
-    }
-
-    render() {
+    render() {                
         return (
             <>
                 <BackgroundSlider
-                    images={[Slide1, Slide2, Slide3, Slide4, Slide5]}
+                    images={this.state.sliders}
                     duration={5} 
                     transition={2} 
                     className="cbp-bislideshow"

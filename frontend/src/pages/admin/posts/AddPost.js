@@ -6,33 +6,20 @@ import { redirect } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AddEditPost = () => {
+    let navigate = useNavigate();
 
-    const currentUser = localStorage.getItem('user_id');
-
-    const [statuses, setStatuses] = useState([]);
-
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        if (localStorage.getItem('access_token') === null) {
-            redirect("/login");
-        }
-
-        axios.get(process.env.REACT_APP_BACKEND_URL + "/api/status").then((response) => {
-            setStatuses(response.data);
-        });
-
-        axios.get(process.env.REACT_APP_BACKEND_URL + "/api/categories").then((response) => {
-            setCategories(response.data);
-        });
-    }, []);
+    const currentUser = localStorage.getItem('user_id');    
 
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
         user: currentUser,
+        address: '',
+        area: '',
+        completed_year: '',
         content: '',
         category: '',
         status: '',
@@ -43,6 +30,38 @@ const AddEditPost = () => {
         seo_meta_description: '',
     });
 
+
+    const [statuses, setStatuses] = useState([]);
+
+    const [categories, setCategories] = useState([]);
+
+    const generateSlug = (title) => {
+        return title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')    // Replace non-alphanumeric characters with hyphens
+            .replace(/(^-+|-+$)/g, '');     // Remove leading and trailing hyphens
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem('user_id') == null) {
+            navigate("/login");
+        }
+
+        if (formData.title) {
+            setFormData((prevData) => ({
+                ...prevData,
+                slug: generateSlug(prevData.title),
+            }));
+        }
+
+        axios.get(process.env.REACT_APP_BACKEND_URL + "/api/status").then((response) => {
+            setStatuses(response.data);
+        });
+
+        axios.get(process.env.REACT_APP_BACKEND_URL + "/api/categories").then((response) => {
+            setCategories(response.data);
+        });
+    }, [formData.title]);    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,6 +86,9 @@ const AddEditPost = () => {
         const postData = new FormData();
         postData.append('title', formData.title);
         postData.append('slug', formData.slug);
+        postData.append('address', formData.address);
+        postData.append('area', formData.area);
+        postData.append('completed_year', formData.completed_year);
         postData.append('user', formData.user);
         postData.append('content', formData.content);
         postData.append('category', formData.category);
@@ -87,6 +109,7 @@ const AddEditPost = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });            
+            navigate('/admin/posts');
         } catch (error) {
             console.error(error);
         }
@@ -98,9 +121,9 @@ const AddEditPost = () => {
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xxl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <Button variant="primary" onClick={() => { window.location.href = '/admin/posts' }} className="ms-auto float-end">
-                        Back to Posts
+                        Back to Projects
                     </Button>
-                    <h2>Add Article</h2>
+                    <h2>Add Project</h2>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="formTitle">
                             <Form.Label>Title</Form.Label>
@@ -118,6 +141,36 @@ const AddEditPost = () => {
                                 type="text"
                                 name="slug"
                                 value={formData.slug}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formAddress">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formArea">
+                            <Form.Label>Area</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="area"
+                                value={formData.area}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formCompletedYear">
+                            <Form.Label>Completed Year</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="completed_year"
+                                value={formData.completed_year}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -241,9 +294,11 @@ const AddEditPost = () => {
                             />
                         </Form.Group>
 
-                        <Button variant="btn btn-lg btn-primary mt-3" type="submit">
-                            Submit
-                        </Button>
+                        <div className="flex justify-center  mt-3 mb-10">
+                            <Button variant="btn btn-lg btn-primary" type="submit">
+                                Submit
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             </div>

@@ -15,7 +15,7 @@ class Category(models.Model):
     description = models.TextField()
     seo_meta_title = models.CharField(max_length=100)
     seo_meta_keywords = models.CharField(max_length=100)
-    image = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -65,6 +65,9 @@ class Article(models.Model):
     slug = models.SlugField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    address = models.TextField(blank=True, default="")
+    area = models.CharField(max_length=100, blank=True, default="")
+    completed_year = models.IntegerField(blank=True, default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -99,7 +102,8 @@ class ContactMessage(models.Model):
 class Page(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField()
-    image = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    content = models.TextField()
     seo_meta_title = models.CharField(max_length=100)
     seo_meta_description = models.CharField(max_length=100)
     seo_meta_keywords = models.CharField(max_length=100)
@@ -112,8 +116,8 @@ class Page(models.Model):
     
 class Setting(models.Model):
     site_timezone = models.CharField(max_length=100)
-    site_logo = models.CharField(max_length=100)
-    site_favicon = models.CharField(max_length=100)
+    site_logo = models.ImageField(upload_to='images/', null=True, blank=True)
+    site_favicon = models.ImageField(upload_to='images/', null=True, blank=True)
     site_name = models.CharField(max_length=100)
     site_description = models.TextField()
     site_keywords = models.TextField()
@@ -125,7 +129,7 @@ class Setting(models.Model):
     company_address = models.CharField(max_length=100)
     company_phone = models.CharField(max_length=100)
     company_email = models.CharField(max_length=100)
-    company_logo = models.CharField(max_length=100)
+    company_logo = models.ImageField(upload_to='images/', null=True, blank=True)
     email_setting_driver = models.TextField()
     email_setting_host = models.CharField(max_length=100)
     email_setting_port = models.CharField(max_length=100)
@@ -136,7 +140,7 @@ class Setting(models.Model):
     seo_setting_description = models.CharField(max_length=100)
     seo_setting_keywords = models.CharField(max_length=100)
     seo_setting_author = models.CharField(max_length=100)
-    seo_setting_image = models.CharField(max_length=100)
+    seo_setting_image = models.ImageField(upload_to='images/', null=True, blank=True)
     google_analytics_id = models.CharField(max_length=100)
     google_analytics_script = models.TextField()
     google_analytics_enable = models.BooleanField(default=True)
@@ -154,3 +158,10 @@ class Setting(models.Model):
 
     def __str__(self):
         return self.site_name
+    
+class SliderImage(models.Model):
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.image    

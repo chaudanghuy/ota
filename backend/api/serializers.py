@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Status, Category, Role, Permission, RoleHasPermission, User, Article, Token, Image, ContactMessage, Page, Setting
+from .models import Status, Category, Role, Permission, RoleHasPermission, User, Article, Token, Image, ContactMessage, Page, Setting, SliderImage
 
 class StatusSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,3 +60,9 @@ class SettingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Setting
         fields = '__all__'                                                           
+
+
+class SliderImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SliderImage
+        fields = '__all__'

@@ -233,7 +233,7 @@ def article_detail_image_delete(request, pk):
 #
 @api_view(['GET'])
 def project_list(request, status):
-    status = Status.objects.filter(name=status).first()
+    status = Status.objects.filter(slug=status).first()
     if status is not None:
         projects = Article.objects.filter(status=status)
         serializer = ArticleSerializer(projects, many=True)

@@ -1471,7 +1471,7 @@ h2.gallery_name{
         width: 50px;
         height: 50px;
         display: inline-block;
-        background: url(../images/menu.png) center center no-repeat
+        background: url(../img/menu.png) center center no-repeat
     }
     #menu,
     #mobile_menu {

@@ -118,35 +118,30 @@ const Header = (props) => {
                         <ul className="clearfix">
                             {" "}
                             <li>
-                                <a href="" className="">
+                                <a href="/" className="">
                                     <span data-hover="trang chủ">home</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="./project-3" className="unclickable more">
+                            <CDropdown dark as="li" variant="nav-item">
+                                <CDropdownToggle color="dark">
                                     <span data-hover="dự án">project</span>
-                                </a>
-                                <ul className="clearfix">
-                                    {" "}
-                                    <li>
-                                        <a href="./completed-4" className="">
-                                            <span data-hover="đã hoàn thành">completed</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="./coming-soon-5" className="">
-                                            <span data-hover="đang triển khai">coming soon</span>
-                                        </a>
-                                    </li>
-                                </ul>{" "}
-                            </li>
+                                </CDropdownToggle>
+                                <CDropdownMenu className="clearfix">
+                                    <CDropdownItem href="/projects/completed">
+                                        <span data-hover="đã hoàn thành">completed</span>
+                                    </CDropdownItem>
+                                    <CDropdownItem href="/projects/coming-soon">
+                                        <span data-hover="đang triển khai">coming soon</span>
+                                    </CDropdownItem>
+                                </CDropdownMenu>
+                            </CDropdown>
                             <li>
-                                <a href="./about-us-6" className="">
+                                <a href="/about-us" className="">
                                     <span data-hover="giới thiệu">about us</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="./contact-7" className="">
+                                <a href="/contact" className="">
                                     <span data-hover="liên hệ">contact</span>
                                 </a>
                             </li>
@@ -154,7 +149,7 @@ const Header = (props) => {
                         <ul className="socials">
                             <li>
                                 <a
-                                    href="https://www.facebook.com/w2dstudio/"
+                                    href={setting.social_facebook}
                                     target="_blank"
                                     rel="nofollow noopenner"
                                 >
@@ -163,7 +158,7 @@ const Header = (props) => {
                             </li>
                             <li>
                                 <a
-                                    href="https://www.instagram.com/w2dstudio/"
+                                    href={setting.social_twitter}
                                     target="_blank"
                                     rel="nofollow noopenner"
                                 >

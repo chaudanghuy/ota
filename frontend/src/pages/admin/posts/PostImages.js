@@ -83,8 +83,8 @@ const PostImages = () => {
         <div className="w-full flex flex-col items-center justify-center px-6 py-8 mx-auto my-5 lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xxl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <Button variant="danger" onClick={() => { window.location.href = '/admin/posts' }} className="ms-auto float-end">
-                    Back to Project
+                    <Button variant="danger" onClick={() => { window.location.href = '/admin/posts' }} className="ms-auto float-end">
+                        Back to Project
                     </Button>
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-dark">
                         Upload Images
@@ -113,9 +113,11 @@ const PostImages = () => {
                                                 </Col>
                                             ))}
                                         </Row>
-                                        <Button variant="primary" type="submit" className="mt-3">
-                                            Upload Images
-                                        </Button>
+                                        <div className='flex justify-center mt-3 mb-10'>
+                                            <Button variant="primary" type="submit" className="mt-3">
+                                                Upload Images
+                                            </Button>
+                                        </div>
                                     </Form>
                                 </Card.Body>
                             </Card>

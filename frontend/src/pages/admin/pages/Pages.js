@@ -76,7 +76,7 @@ const Pages = (props) => {
                                 <tr key={page.id}>
                                     <td>{page.id}</td>
                                     <td>{page.title}</td>
-                                    <td><img className="img-fluid w-20 rounded-circld" src={URL + page.image} alt={page.title} /></td>
+                                    <td><img className="img-fluid w-20 rounded-circld" src={BACKEND_URL + page.image} alt={page.title} /></td>
                                     <td>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(page.created_at))}</td>
                                     <td>
                                         <Button variant="warning" as={Link} to={`/admin/pages/edit/${page.id}`}>Edit</Button>{' '}

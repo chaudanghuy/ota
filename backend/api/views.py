@@ -213,7 +213,9 @@ def article_detail_image(request, pk):
     elif request.method == 'POST':
         files = request.FILES.getlist('images')
         for file in files:
-            article.images.add(file)
+            image_instance = Image(image=file)
+            image_instance.save()
+            article.images.add(image_instance)
         return Response({'message': 'Images uploaded successfully'}, status=status.HTTP_201_CREATED) 
 
 @api_view(['DELETE'])

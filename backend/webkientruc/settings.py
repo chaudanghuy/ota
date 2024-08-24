@@ -11,8 +11,18 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
 from datetime import timedelta
+from dotenv import load_dotenv
+
+import dj_database_url
+import os
+
+load_dotenv()
+
+ENV = os.getenv("ENV")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +41,7 @@ SECRET_KEY = 'django-insecure-a18(%^6dl_!rhps_$vv74#cc!y=a)3(+b*fg&%plmjk^0*86ec
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '[::1]']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '[::1]', 'ota.phapsuit.com']
 
 
 # Application definition
@@ -85,9 +95,21 @@ WSGI_APPLICATION = 'webkientruc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': db_config
-}
+if ENV == 'Prod':
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": DB_NAME,
+            "USER": DB_USER,
+            "PASSWORD": DB_PASS,
+            "HOST": "localhost",
+            "PORT": "3306",
+        }
+    }
+else:
+    DATABASES = {
+        'default': db_config
+    }
 
 
 # Password validation
@@ -125,6 +147,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+if ENV == 'Dev':
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -138,6 +164,6 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ORIGINS_ALLOW_ALL = True
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024 # 10 Mb limit

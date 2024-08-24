@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-a18(%^6dl_!rhps_$vv74#cc!y=a)3(+b*fg&%plmjk^0*86ec
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '[::1]', 'ota.phapsuit.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '[::1]', 'api.phapsuit.com']
 
 
 # Application definition

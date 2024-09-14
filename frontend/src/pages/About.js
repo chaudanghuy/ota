@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import CEO from '../images/staff/staff_s15.jpg'
+import Logo from '../images/logo.png'
 
 class About extends Component {
     render() {
@@ -10,7 +11,7 @@ class About extends Component {
                     <div className="main clearfix">
                         <div className="row">
                             <div className="half alignRight">
-                                <h2 className="featured_title">Welcome to W2D Studio!</h2>
+                                <h2 className="featured_title">Welcome to OTA Studio!</h2>
                                 <div className="marginTop30">
                                     <p>
                                         Trải qua 10 năm kinh nghiệm trong ngành xây dựng nhà ở, đội ngũ
@@ -32,36 +33,14 @@ class About extends Component {
                                 <div id="about_us_logo" className="size_40">
                                     <div id="loading_content">
                                         <div className="center_me">
-                                            <div id="animated_logo_wrapper">
-                                                <div id="animated_logo">
-                                                    <div className="layer_1">&nbsp;</div>
-                                                    <div className="bar" />
-                                                    <div className="bar odd" />
-                                                    <div className="bar" />
-                                                    <div className="bar odd" />
-                                                    <div className="bar" />
-                                                    <div className="bar odd" />
-                                                    <div className="bar last" />
-                                                </div>
-                                                <div className="animated_logo_text">
-                                                    <span className="text_1">W</span>
-                                                    <span className="text_2">2</span>
-                                                    <span className="text_3">D</span>
-                                                    <span className="text_4">&nbsp;</span>
-                                                    <span className="text_5">S</span>
-                                                    <span className="text_6">T</span>
-                                                    <span className="text_7">U</span>
-                                                    <span className="text_8">D</span>
-                                                    <span className="text_9">I</span>
-                                                    <span className="text_10">O</span>
-                                                </div>
+                                            <div id="animated_logo_wrapper">                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="team_wrapper alignCenter">
+                        {/* <div className="team_wrapper alignCenter">
                             <h2 className="featured_title" />
                             <div className="team-wrap">
                                 <div className="team-item">
@@ -82,7 +61,7 @@ class About extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

@@ -420,7 +420,12 @@
 }
 
 .size_40 #animated_logo_wrapper{
-	width: 200px;
+	background-image: url('../img/logo.png');
+	height: 200px;
+    width: 100%;
+    background-position: left, center;
+    margin-left: 50px;
+    background-repeat: no-repeat;
 	display: inline-block;
 }
 .size_40 #animated_logo{
@@ -1197,7 +1202,7 @@ h2.gallery_name{
 	margin: 0 auto;
 }*/
 .row .half p{
-	font-size: 11px;
+	font-size: 15px;
 }
 
 .team_wrapper{

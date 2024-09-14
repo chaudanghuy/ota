@@ -5,7 +5,7 @@ const GoogleMap = () => {
     <div>
       <iframe
         title="google map"
-        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Le%20Capitole%20-%2027%20Th%C3%A1i%20Th%E1%BB%8Bnh%20-%20%C4%90%E1%BB%91ng%20%C4%90a%20-%20H%C3%A0%20N%E1%BB%99i+(Le%20Capitole%20-%2027%20Th%C3%A1i%20Th%E1%BB%8Bnh%20-%20%C4%90%E1%BB%91ng%20%C4%90a%20-%20H%C3%A0%20N%E1%BB%99i)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=T4,%20T%C3%B2a%20Nh%C3%A0%20Kailash,%20S%E1%BB%91%203,%20Ng%C3%B5%2082,%20D%E1%BB%8Bch%20V%E1%BB%8Dng%20H%E1%BA%ADu,%20C%E1%BA%A7u%20Gi%E1%BA%A5y,%20H%C3%A0%20N%E1%BB%99i+(OTA%20Studio)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
         width="100%"
         height="500"
         style={{ border: 0 }}

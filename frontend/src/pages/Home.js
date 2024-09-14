@@ -18,15 +18,15 @@ class Home extends Component {
     state = {
         statuses: [],        
         sliders: [],        
-        loading: true
+        loading: false
     };    
 
     componentDidMount() {        
-        this.setState({ loading: true });
+        this.setState({ loading: false });
         this.getSliderImages();        
         setTimeout(() => {
             this.setState({ loading: false });
-        }, 5000);
+        }, 1000);
     }
 
     getSliderImages = () => {

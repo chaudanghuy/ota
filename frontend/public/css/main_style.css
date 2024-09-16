@@ -642,7 +642,7 @@ input:invalid, textarea:invalid{border-radius:1px; -moz-box-shadow:0px 0px 5px r
 /* General Styling and Structure
 --------------------------------------------------------------------------------*/
 body{ 
-	background: #fff;
+	background: #b5b5b5;
 	color: #333;
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 400;

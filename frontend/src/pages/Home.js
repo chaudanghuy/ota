@@ -18,15 +18,15 @@ class Home extends Component {
     state = {
         statuses: [],        
         sliders: [],        
-        loading: false
+        loading: true
     };    
 
     componentDidMount() {        
-        this.setState({ loading: false });
+        this.setState({ loading: true });
         this.getSliderImages();        
         setTimeout(() => {
             this.setState({ loading: false });
-        }, 1000);
+        }, 5000);
     }
 
     getSliderImages = () => {
@@ -63,11 +63,11 @@ class Home extends Component {
                                     <div className="bar last" />
                                 </div>
                                 <div className="animated_logo_text">
-                                    <span className="text_1">W</span>
-                                    <span className="text_2">2</span>
-                                    <span className="text_3">D</span>
-                                    <span className="text_4">&nbsp;</span>
-                                    <span className="text_5">S</span>
+                                    <span className="text_1">O</span>
+                                    <span className="text_2">T</span>
+                                    <span className="text_3">A</span>
+                                    <span className="text_4">&nbsp;&nbsp;</span>
+                                    <span className="text_5 ms-4">S</span>
                                     <span className="text_6">T</span>
                                     <span className="text_7">U</span>
                                     <span className="text_8">D</span>

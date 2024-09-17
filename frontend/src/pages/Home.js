@@ -11,6 +11,7 @@ import Slide2 from "../images/slide/slide_s38.jpg";
 import Slide3 from "../images/slide/slide_s37.jpg";
 import Slide4 from "../images/slide/slide_s34.jpg";
 import Slide5 from "../images/slide/slide_s39.jpg";
+import OtaLogo from "../images/ota-logo.mp4";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -26,7 +27,7 @@ class Home extends Component {
         this.getSliderImages();        
         setTimeout(() => {
             this.setState({ loading: false });
-        }, 5000);
+        }, 7000);
     }
 
     getSliderImages = () => {
@@ -52,28 +53,9 @@ class Home extends Component {
                     <div id="loading_content">
                         <div className="center_me">
                             <div id="animated_logo_wrapper">
-                                <div id="animated_logo">
-                                    <div className="layer_1">&nbsp;</div>
-                                    <div className="bar" />
-                                    <div className="bar odd" />
-                                    <div className="bar" />
-                                    <div className="bar odd" />
-                                    <div className="bar" />
-                                    <div className="bar odd" />
-                                    <div className="bar last" />
-                                </div>
-                                <div className="animated_logo_text">
-                                    <span className="text_1">O</span>
-                                    <span className="text_2">T</span>
-                                    <span className="text_3">A</span>
-                                    <span className="text_4">&nbsp;&nbsp;</span>
-                                    <span className="text_5 ms-4">S</span>
-                                    <span className="text_6">T</span>
-                                    <span className="text_7">U</span>
-                                    <span className="text_8">D</span>
-                                    <span className="text_9">I</span>
-                                    <span className="text_10">O</span>
-                                </div>
+                                <video id="animated_logo" autoPlay loop muted>
+                                    <source src={OtaLogo} type="video/mp4" />
+                                </video>
                             </div>
                         </div>
                     </div>

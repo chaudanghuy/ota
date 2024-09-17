@@ -55,7 +55,7 @@ const Project = () => {
                             }}
                         >
                             <span data-offset-key="3n0lc-0-0" style={{ boxSizing: "border-box" }}>
-                                Thiết kế và thi công: W2D Studio
+                                Thiết kế và thi công: OTA Studio
                             </span>
                         </div>
                         <div
@@ -106,8 +106,7 @@ const Project = () => {
                                 textAlign: "center",
                                 boxSizing: "border-box"
                             }}
-                        >
-                            Photo: Nguyễn Thái Thạch
+                        >                            
                         </div>
                     </div>
                 </div>

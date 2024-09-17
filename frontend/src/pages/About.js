@@ -14,17 +14,14 @@ class About extends Component {
                                 <h2 className="featured_title">Welcome to OTA Studio!</h2>
                                 <div className="marginTop30">
                                     <p>
-                                        Trải qua 10 năm kinh nghiệm trong ngành xây dựng nhà ở, đội ngũ
-                                        của chúng tôi hướng tới vẻ đẹp hoàn mỹ của kiến trúc đương đại,
-                                        kết hợp giữa vật liệu cao cấp, thân thiện với người sử dụng, cùng
-                                        với các thiết bị thông minh giúp chủ nhân căn nhà có cuộc sống
-                                        sang trọng và hiện đại.
+                                        Công ty chúng tôi chuyên cung cấp các dịch vụ thiết kế kiến trúc và xây dựng toàn diện, từ giai đoạn lên ý tưởng đến thi công hoàn thiện. Với đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm, chúng tôi cam kết mang đến những giải pháp sáng tạo, đáp ứng tối đa nhu cầu và phong cách của khách hàng.
                                     </p>
                                     <p>
-                                        Khát khao cháy bỏng mang đến cho Việt Nam những ngôi nhà đẳng cấp
-                                        quốc tế đang là cầu nối đưa chúng tôi đến với bạn.
+                                    Chúng tôi luôn chú trọng đến việc tạo ra những không gian sống và làm việc tiện nghi, hiện đại, và thân thiện với môi trường. Các dự án của chúng tôi được thực hiện với sự kết hợp hài hòa giữa thẩm mỹ và công năng, đảm bảo chất lượng cao nhất cho mỗi công trình.
                                     </p>
-                                    <p>Cảm ơn vì đã lựa chọn chúng tôi cho ngôi nhà mới của mình!</p>
+                                    <p>
+                                    Với nhiều năm hoạt động trong ngành, chúng tôi đã thực hiện thành công nhiều dự án từ nhà ở, văn phòng cho đến các công trình công cộng. Công ty luôn đặt lợi ích và sự hài lòng của khách hàng lên hàng đầu, mang đến những sản phẩm bền vững và tối ưu hóa chi phí đầu tư.
+                                    </p>
                                     <p>&nbsp;</p>
                                     <p>&nbsp;</p>{" "}
                                 </div>

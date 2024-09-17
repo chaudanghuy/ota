@@ -420,13 +420,14 @@
 }
 
 .size_40 #animated_logo_wrapper{
-	background-image: url('../img/logo.png');
-	height: 200px;
+	background-image: url('../img/about-us.jpg');
+	height: 500px;
     width: 100%;
     background-position: left, center;
     margin-left: 50px;
     background-repeat: no-repeat;
 	display: inline-block;
+	background-size: contain;
 }
 .size_40 #animated_logo{
 	width: 100%;
@@ -884,9 +885,10 @@ label.hamburger {
     -webkit-transition: -webkit-transform 0.3s;
     -moz-transition: -moz-transform 0.3s;
     transition: transform 0.3s;
-	font-size: 18px;
+	font-size: 16px;
 	padding-left: 25px;
 	padding-right: 20px;
+	text-transform: uppercase;
 }
 #menu ul li a span::before {
     position: absolute;
@@ -1025,6 +1027,7 @@ label.hamburger {
 	width: 100%;
 	background: #fff;
 	z-index: 999;
+	font-size: 11px;
 }
 /*body.home #footer{
 	position: fixed;
@@ -1159,6 +1162,7 @@ label.hamburger {
 }
 .gallery_description .gallery_short_desc{
 	margin-top: 20px;
+	font-size: 12px;
 }
 h2.gallery_name{
 	text-transform: uppercase;
@@ -1183,6 +1187,7 @@ h2.gallery_name{
 	font-weight: 500;
 	text-transform: uppercase;
 	position: relative;
+	margin-top: 30px;
 }
 /*.featured_title:before{
 	content: "";
@@ -1203,6 +1208,7 @@ h2.gallery_name{
 }*/
 .row .half p{
 	font-size: 15px;
+	text-align: right;
 }
 
 .team_wrapper{
@@ -1613,7 +1619,7 @@ h2.gallery_name{
 	
 	.featured_title{
 		font-size: 32px;
-		text-align: center;
+		text-align: center;		
 	}
 }
 @media (max-width:660px) {

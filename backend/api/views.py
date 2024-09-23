@@ -260,7 +260,7 @@ def project_detail(request, slug):
 @api_view(['GET', 'POST'])
 def category_list(request):
     if request.method == 'GET':
-        categories = Category.objects.all()
+        categories = Category.objects.all().exclude(slug='project')
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':

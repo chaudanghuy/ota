@@ -52,6 +52,7 @@ const App = () => {
     const [setting, setSetting] = useState({});
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [categories, setCategories] = useState([]);
 
     const getSetting = async () => {
         try {
@@ -59,6 +60,15 @@ const App = () => {
             setSetting(response.data);
         } catch (error) {
             console.error('Error fetching setting:', error);
+        }
+    };
+
+    const getCategories = async () => {
+        try {
+            const response = await axios.get(BACKEND_URL + '/api/categories');
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
         }
     };
 
@@ -70,6 +80,7 @@ const App = () => {
         }
 
         getSetting();
+        getCategories();
     }, [isLoggedIn]);
 
     return (
@@ -85,6 +96,7 @@ const App = () => {
                     email={email}
                     setEmail={setEmail}
                     setting={setting}
+                    categories={categories}
                 />
                 <Routes>
                     <Route path="/" exact

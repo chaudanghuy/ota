@@ -1,5 +1,5 @@
 
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Logo from '../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faTwitter, faLinkedinIn, faYoutube, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons'
@@ -7,6 +7,7 @@ import { faFacebookF, faTwitter, faLinkedinIn, faYoutube, faGithub, faInstagram 
 import { CDropdown, CDropdownToggle, CDropdownMenu, CDropdownItem, CDropdownDivider } from '@coreui/react';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const FRONTEND_URL = process.env.REACT_APP_FRONT;
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -15,13 +16,14 @@ const Header = (props) => {
 
     let navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, setting } = props;        
-
+    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, setting, categories } = props;         
+    
+    
     const handleLogout = () => {
         toast.success('You have successfully logged out.');        
         localStorage.clear();
         navigate('/login');        
-    }
+    }    
 
     return (
         <div id="header_wrapper">
@@ -46,12 +48,11 @@ const Header = (props) => {
                                     <span data-hover="dự án">project</span>
                                 </CDropdownToggle>
                                 <CDropdownMenu className="clearfix">
-                                    <CDropdownItem href="/projects/completed">
-                                        <span data-hover="đã hoàn thành">completed</span>
-                                    </CDropdownItem>
-                                    <CDropdownItem href="/projects/coming-soon">
-                                        <span data-hover="đang triển khai">coming soon</span>
-                                    </CDropdownItem>
+                                    {categories.length > 0 && categories.map((category) => (
+                                        <CDropdownItem href={`/projects/${category.slug}`}>
+                                            <span data-hover={category.name}>{category.name}</span>
+                                        </CDropdownItem>
+                                    ))}                                    
                                 </CDropdownMenu>
                             </CDropdown>
                             <li>

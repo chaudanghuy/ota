@@ -247,12 +247,14 @@ def project_list(request, status):
 def project_detail(request, slug):
     try:
         category = Category.objects.get(slug=slug)
-        if category is not None:
-            projects = Article.objects.filter(category=category)            
+        if category is not None:            
+            projects = Article.objects.filter(category=category)        
+        else:
+            projects = Article.objects.all()
     except Article.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ArticleSerializer(projects)
+    serializer = ArticleSerializer(projects, many=True)
     return Response(serializer.data)
 
 

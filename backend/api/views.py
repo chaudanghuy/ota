@@ -246,11 +246,13 @@ def project_list(request, status):
 @api_view(['GET'])
 def project_detail(request, slug):
     try:
-        project = Article.objects.get(slug=slug)
+        category = Category.objects.get(slug=slug)
+        if category is not None:
+            projects = Article.objects.filter(category=category)            
     except Article.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ArticleSerializer(project)
+    serializer = ArticleSerializer(projects)
     return Response(serializer.data)
 
 

@@ -16,7 +16,7 @@ urlpatterns = [
     path("article/images/delete/<int:pk>", views.article_detail_image_delete),
 
     # Projects
-    path("projects/<str:status>", views.project_list),
+    path("projects/<str:slug>", views.project_list),
     path("project/<str:slug>", views.project_detail),
 
     # Category

@@ -232,19 +232,7 @@ def article_detail_image_delete(request, pk):
 # Projects    
 #
 @api_view(['GET'])
-def project_list(request, status):
-    status = Status.objects.filter(slug=status).first()
-    if status is not None:
-        projects = Article.objects.filter(status=status)
-        serializer = ArticleSerializer(projects, many=True)
-        return Response(serializer.data)
-
-    projects = Article.objects.all()
-    serializer = ArticleSerializer(projects, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def project_detail(request, slug):
+def project_list(request, slug):
     try:
         category = Category.objects.get(slug=slug)
         if category is not None:            
@@ -255,6 +243,16 @@ def project_detail(request, slug):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     serializer = ArticleSerializer(projects, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def project_detail(request, slug):
+    try:
+        project = Article.objects.get(slug=slug)
+    except Article.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ArticleSerializer(project)
     return Response(serializer.data)
 
 

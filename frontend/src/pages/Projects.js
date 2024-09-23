@@ -15,7 +15,7 @@ const Projects = () => {
 
     const fetchProjects = async () => {
         axios
-            .get(BACKEND_URL + "/api/project/" + param.status)
+            .get(BACKEND_URL + "/api/projects/" + param.status)
             .then((res) => {
                 console.log(res.data);
                 setProjects(res.data);

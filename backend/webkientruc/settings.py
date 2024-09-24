@@ -161,6 +161,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://ota.phapsuit.com',
     'https://ota.com.vn',
+    'https://www.ota.com.vn',
 ]
 
 CORS_ORIGINS_ALLOW_ALL = True

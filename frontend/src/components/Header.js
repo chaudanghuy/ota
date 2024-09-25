@@ -16,14 +16,20 @@ const Header = (props) => {
 
     let navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, setting, categories } = props;         
-    
-    
-    const handleLogout = () => {
-        toast.success('You have successfully logged out.');        
-        localStorage.clear();
-        navigate('/login');        
+    const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, setting, categories } = props;
+    const [isOpen, setIsOpen] = useState(false);
+    const [expandedItem, setExpandedItem] = useState(null);
+
+    const handleToggleMenu = (index) => {
+        setIsOpen(!isOpen);
+        setExpandedItem(index === expandedItem ? null : index);
     }    
+
+    const handleLogout = () => {
+        toast.success('You have successfully logged out.');
+        localStorage.clear();
+        navigate('/login');
+    }
 
     return (
         <div id="header_wrapper">
@@ -52,7 +58,7 @@ const Header = (props) => {
                                         <CDropdownItem href={`/projects/${category.slug}`}>
                                             <span data-hover={category.name}>{category.name}</span>
                                         </CDropdownItem>
-                                    ))}                                    
+                                    ))}
                                 </CDropdownMenu>
                             </CDropdown>
                             <li>
@@ -116,26 +122,25 @@ const Header = (props) => {
                     </div>
                     <div id="mobile_menu">
                         <label htmlFor="navTrigger" className="hamburger" />
-                        <ul className="clearfix">
+                        <ul className={isOpen ? "clearfix open" : "clearfix"}>
                             {" "}
                             <li>
                                 <a href="/" className="">
                                     <span data-hover="trang chủ">home</span>
                                 </a>
                             </li>
-                            <CDropdown dark as="li" variant="nav-item">
+                            <CDropdown dark as="li" variant="nav-item" onClick={handleToggleMenu} className={isOpen ? "active" : ""}>
                                 <CDropdownToggle color="dark">
                                     <span data-hover="dự án">project</span>
                                 </CDropdownToggle>
                                 <CDropdownMenu className="clearfix">
-                                    <CDropdownItem href="/projects/completed">
-                                        <span data-hover="đã hoàn thành">completed</span>
-                                    </CDropdownItem>
-                                    <CDropdownItem href="/projects/coming-soon">
-                                        <span data-hover="đang triển khai">coming soon</span>
-                                    </CDropdownItem>
+                                    {categories.length > 0 && categories.map((category) => (
+                                        <CDropdownItem href={`/projects/${category.slug}`}>
+                                            <span data-hover={category.name}>{category.name}</span>
+                                        </CDropdownItem>
+                                    ))}
                                 </CDropdownMenu>
-                            </CDropdown>
+                            </CDropdown>                            
                             <li>
                                 <a href="/about-us" className="">
                                     <span data-hover="giới thiệu">about us</span>
@@ -146,27 +151,7 @@ const Header = (props) => {
                                     <span data-hover="liên hệ">contact</span>
                                 </a>
                             </li>
-                        </ul>
-                        <ul className="socials">
-                            <li>
-                                <a
-                                    href={setting.social_facebook}
-                                    target="_blank"
-                                    rel="nofollow noopenner"
-                                >
-                                    <FontAwesomeIcon icon="fa-brands fa-facebook-f" />
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href={setting.social_twitter}
-                                    target="_blank"
-                                    rel="nofollow noopenner"
-                                >
-                                    <FontAwesomeIcon icon="fa-brands fa-instagram" />
-                                </a>
-                            </li>
-                        </ul>
+                        </ul>                                             
                     </div>
                 </div>
             </div>

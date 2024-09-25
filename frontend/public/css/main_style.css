@@ -1522,10 +1522,16 @@ h2.gallery_name{
     input#navTrigger:checked~#mobile_menu ul {
         max-height: 100vh;
         opacity: 1;
+		height: 150px;
     }
 	input#navTrigger:checked~#mobile_menu > ul {
 		padding-top: 20px;
-		padding-bottom: 0;
+		padding-bottom: 0;		
+	}
+	input#navTrigger:checked~#mobile_menu > ul.open {
+		padding-top: 20px;
+		padding-bottom: 0;		
+		height: 339px;
 	}
 	input#navTrigger:checked~#mobile_menu > ul.socials{
 		padding-top: 0;
@@ -1538,6 +1544,9 @@ h2.gallery_name{
     #mobile_menu ul li,
     #mobile_menu ul li a {
         display: block!important
+    }
+	#mobile_menu ul li.active {
+        height: 190px;
     }
     #mobile_menu ul li a {
         padding: 5px 0 !important;
